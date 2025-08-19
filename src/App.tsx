@@ -13,10 +13,6 @@ import ContactPage from './pages/ContactPage';
 import CommunityPage from './pages/CommunityPage';
 import CoursesPage from './pages/CoursesPage';
 import CertificatePage from './pages/CertificatePage';
-import ContactPage from './pages/ContactPage';
-import CommunityPage from './pages/CommunityPage';
-import CoursesPage from './pages/CoursesPage';
-import CertificatePage from './pages/CertificatePage';
 import './App.css';
 
 const pageVariants = {
@@ -121,66 +117,6 @@ function App() {
                       transition={pageTransition}
                     >
                       <ProfilePage />
-                    </motion.div>
-                  } 
-                />
-                <Route 
-                  path="/contact" 
-                  element={
-                    <motion.div
-                      key="contact"
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}
-                    >
-                      <ContactPage />
-                    </motion.div>
-                  } 
-                />
-                <Route 
-                  path="/community" 
-                  element={
-                    <motion.div
-                      key="community"
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}
-                    >
-                      <CommunityPage />
-                    </motion.div>
-                  } 
-                />
-                <Route 
-                  path="/courses" 
-                  element={
-                    <motion.div
-                      key="courses"
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}
-                    >
-                      <CoursesPage />
-                    </motion.div>
-                  } 
-                />
-                <Route 
-                  path="/certificate" 
-                  element={
-                    <motion.div
-                      key="certificate"
-                      initial="initial"
-                      animate="in"
-                      exit="out"
-                      variants={pageVariants}
-                      transition={pageTransition}
-                    >
-                      <CertificatePage />
                     </motion.div>
                   } 
                 />
