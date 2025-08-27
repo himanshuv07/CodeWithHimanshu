@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
 import QuizPage from './pages/QuizPage';
 import ResultsPage from './pages/ResultsPage';
@@ -13,6 +14,7 @@ import ContactPage from './pages/ContactPage';
 import CommunityPage from './pages/CommunityPage';
 import CoursesPage from './pages/CoursesPage';
 import CertificatePage from './pages/CertificatePage';
+import DocumentationPage from './pages/DocumentationPage';
 import './App.css';
 
 const pageVariants = {
@@ -180,8 +182,24 @@ function App() {
                     </motion.div>
                   } 
                 />
+                <Route 
+                  path="/documentation" 
+                  element={
+                    <motion.div
+                      key="documentation"
+                      initial="initial"
+                      animate="in"
+                      exit="out"
+                      variants={pageVariants}
+                      transition={pageTransition}
+                    >
+                      <DocumentationPage />
+                    </motion.div>
+                  } 
+                />
               </Routes>
             </AnimatePresence>
+            <Footer />
           </div>
         </Router>
       </AuthProvider>
