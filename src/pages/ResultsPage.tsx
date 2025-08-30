@@ -133,7 +133,7 @@ const ResultsPage: React.FC = () => {
             {results.percentage >= 90 && (
               <Link
                 to="/certificate"
-                className="flex items-center space-x-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-lg hover:shadow-lg hover:shadow-yellow-500/25 transition-all duration-300"
               >
                 <Trophy className="w-5 h-5" />
                 <span>Get Certificate</span>

@@ -76,7 +76,11 @@ const QuizPage: React.FC = () => {
     localStorage.setItem('quizResults', JSON.stringify(results));
     
     setTimeout(() => {
-      navigate('/results');
+      if (results.percentage >= 90) {
+        navigate('/certificate');
+      } else {
+        navigate('/results');
+      }
     }, 3000);
   };
 

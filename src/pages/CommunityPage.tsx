@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, Heart, Share2, User, Clock, Star } from 'lucide-react';
+import { MessageSquare, Heart, Share2, User, Clock, Star, TrendingUp, Award, Users, Eye } from 'lucide-react';
 
 interface Post {
   id: number;
@@ -11,6 +11,8 @@ interface Post {
   likes: number;
   replies: number;
   category: string;
+  views: number;
+  isVerified?: boolean;
 }
 
 const CommunityPage: React.FC = () => {
@@ -19,48 +21,68 @@ const CommunityPage: React.FC = () => {
       id: 1,
       author: 'Sarah Chen',
       avatar: '👩‍💻',
-      content: 'Just completed the React quiz and scored 95%! The explanations were incredibly helpful. Thanks CodeWithHimanshu for making learning so engaging!',
+      content: 'Just completed the React quiz and scored 95%! The explanations were incredibly helpful. The way complex concepts like useEffect and custom hooks are explained makes it so easy to understand. Thanks CodeWithHimanshu for making learning so engaging! 🚀',
       timestamp: '2 hours ago',
-      likes: 24,
-      replies: 5,
-      category: 'React'
+      likes: 124,
+      replies: 15,
+      category: 'React',
+      views: 1250,
+      isVerified: true
     },
     {
       id: 2,
       author: 'Mike Johnson',
       avatar: '👨‍💼',
-      content: 'The JavaScript fundamentals section is pure gold. I finally understand closures and async/await properly. Highly recommend this platform to anyone starting their coding journey.',
+      content: 'The JavaScript fundamentals section is pure gold! I finally understand closures, async/await, and the event loop properly. The interactive examples and real-world scenarios make all the difference. Highly recommend this platform to anyone starting their coding journey. The certificate system is also amazing! 💯',
       timestamp: '4 hours ago',
-      likes: 18,
-      replies: 3,
-      category: 'JavaScript'
+      likes: 89,
+      replies: 23,
+      category: 'JavaScript',
+      views: 890,
+      isVerified: false
     },
     {
       id: 3,
       author: 'Priya Sharma',
       avatar: '👩‍🎓',
-      content: 'Love the certificate feature! Just earned my Web Development certificate after scoring 92% on the combined quiz. Feeling proud and motivated to learn more!',
+      content: 'Love the certificate feature! Just earned my Web Development certificate after scoring 92% on the combined quiz. The certificate looks professional and I\'ve already added it to my LinkedIn profile. Feeling proud and motivated to learn more technologies! 🏆',
       timestamp: '1 day ago',
-      likes: 31,
-      replies: 8,
-      category: 'Certificates'
+      likes: 156,
+      replies: 31,
+      category: 'Certificates',
+      views: 2100,
+      isVerified: true
     },
     {
       id: 4,
       author: 'Alex Rodriguez',
       avatar: '👨‍🔬',
-      content: 'The study notes are so well organized and comprehensive. I use them as my go-to reference while working on projects. Keep up the amazing work!',
+      content: 'The study notes are so well organized and comprehensive. I use them as my go-to reference while working on projects. The code examples are practical and the explanations are clear. Keep up the amazing work! The dark theme is perfect for late-night coding sessions. 🌙',
       timestamp: '2 days ago',
-      likes: 15,
-      replies: 2,
-      category: 'Study Notes'
+      likes: 67,
+      replies: 12,
+      category: 'Study Notes',
+      views: 670,
+      isVerified: false
+    },
+    {
+      id: 5,
+      author: 'Emma Wilson',
+      avatar: '👩‍🚀',
+      content: 'The TypeScript advanced course blew my mind! The way generics and advanced types are explained with real-world examples is phenomenal. I went from being confused about TypeScript to confidently using it in production. The quiz questions are challenging but fair. 🔥',
+      timestamp: '3 days ago',
+      likes: 203,
+      replies: 45,
+      category: 'TypeScript',
+      views: 3200,
+      isVerified: true
     }
   ]);
 
   const [newPost, setNewPost] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('General');
 
-  const categories = ['General', 'HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'Python', 'Certificates', 'Study Notes'];
+  const categories = ['General', 'HTML', 'CSS', 'JavaScript', 'React', 'Node.js', 'Python', 'TypeScript', 'Certificates', 'Study Notes'];
 
   const handleSubmitPost = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,7 +95,8 @@ const CommunityPage: React.FC = () => {
         timestamp: 'Just now',
         likes: 0,
         replies: 0,
-        category: selectedCategory
+        category: selectedCategory,
+        views: 0
       };
       setPosts([post, ...posts]);
       setNewPost('');
@@ -89,30 +112,75 @@ const CommunityPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-black text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Community Hub
+          <h1 className="text-5xl sm:text-6xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Community Hub
+            </span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
             Connect with fellow learners, share your progress, and get inspired by the community!
           </p>
+        </motion.div>
+
+        {/* Community Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid grid-cols-1 sm:grid-cols-4 gap-6 mb-12"
+        >
+          {[
+            { icon: Users, label: 'Active Members', value: '15.2K', color: 'from-blue-400 to-cyan-400' },
+            { icon: MessageSquare, label: 'Discussions', value: '3.4K', color: 'from-green-400 to-emerald-400' },
+            { icon: TrendingUp, label: 'Success Stories', value: '892', color: 'from-purple-400 to-pink-400' },
+            { icon: Award, label: 'Certificates Earned', value: '5.7K', color: 'from-yellow-400 to-orange-400' }
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              whileHover={{ 
+                y: -5,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              className="group relative bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-gray-700 transition-all duration-300 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative text-center">
+                <div className={`w-12 h-12 bg-gradient-to-r ${stat.color} rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                  <stat.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">
+                  {stat.value}
+                </h3>
+                <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                  {stat.label}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Post Creation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8"
+          transition={{ delay: 0.3 }}
+          className="bg-gray-900 rounded-2xl border border-gray-800 p-6 mb-8 hover:border-gray-700 transition-all duration-300"
         >
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Share Your Experience
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center space-x-2">
+            <MessageSquare className="w-5 h-5 text-blue-400" />
+            <span>Share Your Experience</span>
           </h2>
           
           <form onSubmit={handleSubmitPost} className="space-y-4">
@@ -120,7 +188,7 @@ const CommunityPage: React.FC = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white transition-all duration-300 hover:border-gray-600"
               >
                 {categories.map(category => (
                   <option key={category} value={category}>{category}</option>
@@ -133,7 +201,7 @@ const CommunityPage: React.FC = () => {
               onChange={(e) => setNewPost(e.target.value)}
               placeholder="Share your learning experience, ask questions, or give feedback..."
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400 resize-none transition-all duration-300 hover:border-gray-600"
             />
             
             <motion.button
@@ -141,43 +209,11 @@ const CommunityPage: React.FC = () => {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={!newPost.trim()}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg hover:shadow-blue-500/25 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Share Post
             </motion.button>
           </form>
-        </motion.div>
-
-        {/* Community Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8"
-        >
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-3">
-              <User className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">2,847</h3>
-            <p className="text-gray-600 dark:text-gray-400">Active Learners</p>
-          </div>
-          
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-            <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-3">
-              <MessageSquare className="w-6 h-6 text-green-600 dark:text-green-400" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">1,234</h3>
-            <p className="text-gray-600 dark:text-gray-400">Discussions</p>
-          </div>
-          
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-            <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-3">
-              <Star className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-            </div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white">4.9</h3>
-            <p className="text-gray-600 dark:text-gray-400">Average Rating</p>
-          </div>
         </motion.div>
 
         {/* Posts Feed */}
@@ -187,54 +223,82 @@ const CommunityPage: React.FC = () => {
               key={post.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + index * 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+              transition={{ delay: 0.4 + index * 0.1 }}
+              whileHover={{ 
+                y: -2,
+                transition: { duration: 0.3 }
+              }}
+              className="group relative bg-gray-900 rounded-2xl border border-gray-800 p-6 hover:border-gray-700 transition-all duration-300 overflow-hidden"
             >
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center text-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              
+              <div className="relative flex items-start space-x-4">
+                <motion.div 
+                  whileHover={{ scale: 1.1 }}
+                  className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-xl shadow-lg"
+                >
                   {post.avatar}
-                </div>
+                </motion.div>
                 
                 <div className="flex-grow">
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center space-x-3">
-                      <h3 className="font-semibold text-gray-900 dark:text-white">
+                      <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
                         {post.author}
                       </h3>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full">
+                      {post.isVerified && (
+                        <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs">✓</span>
+                        </div>
+                      )}
+                      <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-xs rounded-full font-medium">
                         {post.category}
                       </span>
                     </div>
-                    <div className="flex items-center text-gray-500 dark:text-gray-400 text-sm">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {post.timestamp}
+                    <div className="flex items-center text-gray-500 text-sm space-x-4">
+                      <div className="flex items-center space-x-1">
+                        <Eye className="w-4 h-4" />
+                        <span>{post.views}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{post.timestamp}</span>
+                      </div>
                     </div>
                   </div>
                   
-                  <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">
+                  <p className="text-gray-300 mb-4 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
                     {post.content}
                   </p>
                   
                   <div className="flex items-center space-x-6">
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       onClick={() => handleLike(post.id)}
-                      className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                      className="group/btn flex items-center space-x-2 text-gray-500 hover:text-red-400 transition-colors duration-300"
                     >
-                      <Heart className="w-5 h-5" />
-                      <span>{post.likes}</span>
+                      <Heart className="w-5 h-5 group-hover/btn:fill-current" />
+                      <span className="font-medium">{post.likes}</span>
                     </motion.button>
                     
-                    <button className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
+                    <motion.button 
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="flex items-center space-x-2 text-gray-500 hover:text-blue-400 transition-colors duration-300"
+                    >
                       <MessageSquare className="w-5 h-5" />
-                      <span>{post.replies}</span>
-                    </button>
+                      <span className="font-medium">{post.replies}</span>
+                    </motion.button>
                     
-                    <button className="flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-green-500 dark:hover:text-green-400 transition-colors">
+                    <motion.button 
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="flex items-center space-x-2 text-gray-500 hover:text-green-400 transition-colors duration-300"
+                    >
                       <Share2 className="w-5 h-5" />
-                      <span>Share</span>
-                    </button>
+                      <span className="font-medium">Share</span>
+                    </motion.button>
                   </div>
                 </div>
               </div>
@@ -242,23 +306,81 @@ const CommunityPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Community Guidelines */}
+        {/* Trending Topics */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6"
+          className="mt-16 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 border border-gray-700"
         >
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Community Guidelines
+          <h3 className="text-2xl font-bold text-white mb-6 flex items-center space-x-2">
+            <TrendingUp className="w-6 h-6 text-blue-400" />
+            <span>Trending Topics</span>
           </h3>
-          <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-            <li>• Be respectful and supportive to fellow learners</li>
-            <li>• Share constructive feedback and helpful resources</li>
-            <li>• Keep discussions relevant to programming and learning</li>
-            <li>• No spam, self-promotion, or inappropriate content</li>
-            <li>• Help create a positive learning environment for everyone</li>
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { topic: 'React Hooks Best Practices', posts: 45, color: 'from-cyan-400 to-blue-500' },
+              { topic: 'JavaScript Performance Tips', posts: 32, color: 'from-yellow-400 to-orange-500' },
+              { topic: 'TypeScript Advanced Patterns', posts: 28, color: 'from-blue-400 to-indigo-500' }
+            ].map((trend, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="group bg-gray-800 rounded-xl p-4 border border-gray-700 hover:border-gray-600 transition-all duration-300 cursor-pointer"
+              >
+                <div className={`w-full h-2 bg-gradient-to-r ${trend.color} rounded-full mb-3 group-hover:h-3 transition-all duration-300`} />
+                <h4 className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-300">
+                  {trend.topic}
+                </h4>
+                <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
+                  {trend.posts} active discussions
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Community Guidelines */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1 }}
+          className="mt-12 bg-gradient-to-br from-blue-900/20 to-purple-900/20 rounded-2xl p-8 border border-blue-800/30"
+        >
+          <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2">
+            <Star className="w-5 h-5 text-yellow-400" />
+            <span>Community Guidelines</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-blue-400 rounded-full" />
+                <span>Be respectful and supportive to fellow learners</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full" />
+                <span>Share constructive feedback and helpful resources</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-purple-400 rounded-full" />
+                <span>Keep discussions relevant to programming and learning</span>
+              </li>
+            </ul>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-pink-400 rounded-full" />
+                <span>No spam, self-promotion, or inappropriate content</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full" />
+                <span>Help create a positive learning environment</span>
+              </li>
+              <li className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-cyan-400 rounded-full" />
+                <span>Celebrate achievements and milestones together</span>
+              </li>
+            </ul>
+          </div>
         </motion.div>
       </div>
     </div>

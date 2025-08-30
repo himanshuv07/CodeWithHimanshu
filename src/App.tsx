@@ -15,6 +15,9 @@ import CommunityPage from './pages/CommunityPage';
 import CoursesPage from './pages/CoursesPage';
 import CertificatePage from './pages/CertificatePage';
 import DocumentationPage from './pages/DocumentationPage';
+import TutorialsPage from './pages/TutorialsPage';
+import ArticlesPage from './pages/ArticlesPage';
+import CompetitionPage from './pages/CompetitionPage';
 import './App.css';
 
 const pageVariants = {
